@@ -1,6 +1,6 @@
 "use client"
-import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+
+import { useState, useEffect } from "react"
 import SectionTitle from "./SectionTile"
 
 const HRModuleSection = () => {
@@ -17,31 +17,32 @@ const HRModuleSection = () => {
   const images = ["pic5.png", "pic6.png", "pic7.png"]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
-  }
+  // Autoplay functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 3000) // Change image every 3 seconds
 
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
-  }
+    return () => clearInterval(interval) // Cleanup on unmount
+  }, [images.length])
 
   return (
-    <section className="py-20 bg-white">
-      <div className="container mx-auto px-6">
-        <SectionTitle title="HR Module" className="mb-16" />
+    <section className="py-12 bg-white">
+      <div className="container mx-auto px-4">
+        <SectionTitle title="HR Module" className="mb-10" />
 
         {/* Flex layout for features list and carousel */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           {/* Left Side: HR Features List */}
-          <div className="bg-gray-50 p-8 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-6 text-purple-700">HR Features</h3>
-            <div className="space-y-4">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-sm">
+            <h3 className="text-lg font-semibold mb-4 text-purple-700">HR Features</h3>
+            <div className="space-y-3">
               {hrFeatures.map((feature, index) => (
                 <div key={index} className="flex items-start">
-                  <span className="text-purple-600 mr-3 mt-1 flex-shrink-0">
+                  <span className="text-purple-600 mr-2 mt-0.5 flex-shrink-0">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
+                      className="h-4 w-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -54,47 +55,21 @@ const HRModuleSection = () => {
                       />
                     </svg>
                   </span>
-                  <p className="text-gray-700">{feature}</p>
+                  <p className="text-sm text-gray-700">{feature}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right Side: Image Carousel */}
+          {/* Right Side: Image Carousel - Simplified with autoplay */}
           <div>
-            <div className="relative rounded-xl overflow-hidden shadow-lg">
+            <div className="relative rounded-lg overflow-hidden shadow-md max-w-md mx-auto">
               <img
                 src={images[currentImageIndex] || "/placeholder.svg"}
                 alt={`HR Module Image ${currentImageIndex + 1}`}
-                className="w-full h-auto rounded-xl"
+                className="w-full h-auto rounded-lg transition-opacity duration-500"
+                style={{ maxHeight: "250px", objectFit: "cover" }}
               />
-
-              {/* Navigation buttons */}
-              <div className="absolute inset-0 flex items-center justify-between p-4">
-                <button
-                  onClick={prevImage}
-                  className="bg-white/80 hover:bg-white text-purple-700 p-2 rounded-full shadow-md transition-all"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="bg-white/80 hover:bg-white text-purple-700 p-2 rounded-full shadow-md transition-all"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-
-              {/* Dots indicator */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                {images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full ${index === currentImageIndex ? "bg-purple-600" : "bg-white/70"}`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>

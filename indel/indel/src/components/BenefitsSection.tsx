@@ -1,6 +1,6 @@
 "use client"
-import { useState } from "react"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+
+import { useState, useEffect } from "react"
 
 const BenefitsSection = () => {
   const benefits = [
@@ -28,80 +28,53 @@ const BenefitsSection = () => {
   const images = ["pic2.png", "pic3.png", "/pic4.png"]
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
-  const nextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
-  }
-
-  const prevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + images.length) % images.length)
-  }
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [images.length])
 
   return (
-    <section className="bg-gray-50 py-16">
-      {/* Purple header banner */}
-      <div className="bg-purple-700 py-10 relative mb-16">
-        <div className="container mx-auto px-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-white text-center">Indel Offers Wide Range Of Benefits</h2>
+    <section className="bg-gray-50 py-12">
+      {/* Purple Header Banner */}
+      <div className="bg-gradient-to-r from-purple-700 to-indigo-700 py-6 relative mb-10">
+        <div className="container mx-auto px-4">
+          <h2 className="text-xl md:text-2xl font-bold text-white text-center">Indel Offers Wide Range Of Benefits</h2>
         </div>
-        {/* Create the wavy bottom edge */}
+        {/* Slanted bottom */}
         <div
-          className="absolute bottom-0 left-0 right-0 h-8 bg-gray-50"
+          className="absolute bottom-0 left-0 right-0 h-6 bg-gray-50"
           style={{
             clipPath: "polygon(0 100%, 100% 100%, 100% 0, 50% 100%, 0 0)",
           }}
         ></div>
       </div>
 
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12">
-          {/* Left Side: Benefits List */}
-          <div className="bg-white p-8 rounded-xl shadow-md">
-            <h3 className="text-xl font-semibold mb-6 text-purple-700">Key Benefits</h3>
-            <ul className="space-y-3">
+      <div className="container mx-auto px-4">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
+          {/* Text Column */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 text-purple-700">Key Benefits</h3>
+            <ul className="grid grid-cols-1 md:grid-cols-2 gap-2 text-gray-700 text-sm">
               {benefits.map((benefit, index) => (
-                <li key={index} className="flex items-start text-gray-700">
-                  <span className="text-purple-600 mr-2 mt-1">➔</span>
-                  <span className="text-sm md:text-base">{benefit}</span>
+                <li key={index} className="flex items-start">
+                  <span className="text-purple-600 mr-1 mt-0.5 text-xs">➔</span>
+                  <span>{benefit}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Right Side: Dashboard Image Carousel */}
-          <div className="flex flex-col justify-center">
-            <div className="relative rounded-xl overflow-hidden shadow-lg">
+          {/* Image Column */}
+          <div className="max-w-md mx-auto w-full">
+            <div className="relative rounded-lg overflow-hidden shadow-md">
               <img
-                src={images[currentImageIndex] || "/placeholder.svg"}
+                src={images[currentImageIndex]}
                 alt={`Indel Dashboard ${currentImageIndex + 1}`}
-                className="w-full h-auto rounded-xl"
+                className="w-full h-auto object-contain transition-opacity duration-500"
+                style={{ maxHeight: "250px" }}
               />
-
-              {/* Navigation buttons */}
-              <div className="absolute inset-0 flex items-center justify-between p-4">
-                <button
-                  onClick={prevImage}
-                  className="bg-white/80 hover:bg-white text-purple-700 p-2 rounded-full shadow-md transition-all"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="bg-white/80 hover:bg-white text-purple-700 p-2 rounded-full shadow-md transition-all"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
-
-              {/* Dots indicator */}
-              <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                {images.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentImageIndex(index)}
-                    className={`w-2 h-2 rounded-full ${index === currentImageIndex ? "bg-purple-600" : "bg-white/70"}`}
-                  />
-                ))}
-              </div>
             </div>
           </div>
         </div>

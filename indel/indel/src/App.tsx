@@ -1,17 +1,17 @@
 "use client"
 
-import type React from "react"
 
 import { useRef } from "react"
 import AboutUsSection from "./components/AboutUsSection"
 import BenefitsSection from "./components/BenefitsSection"
-import ContactSection from "./components/ContactSection"
+import ContactSection from "./components/StaffPortalSection"
 import FeaturesSection from "./components/FeaturesSection"
 import Footer from "./components/Footer"
 import HeroSection from "./components/HeroSection"
 import HRModuleSection from "./components/HRModuleSection"
 import MobileAppSection from "./components/MobileAppSection"
 import Navbar from "./components/Navbar"
+import StaffPortalSection from "./components/StaffPortalSection"
 
 export default function Home() {
   // Create refs for each section for smooth scrolling
@@ -56,11 +56,11 @@ export default function Home() {
         {/* Welcome Section - Added this section */}
         <div ref={welcomeRef}>
           {/* You can create a WelcomeSection component or use an existing one */}
-          <div className="py-20 bg-white">
-            <div className="container mx-auto px-6">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl font-bold mb-8 text-purple-700">Welcome to INDEL</h2>
-                <p className="text-lg text-gray-700 leading-relaxed">
+          <div className="py-12 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-purple-700">Welcome to INDEL</h2>
+                <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                   The next-generation web-based application for security companies, designed to streamline your
                   operations and enhance your business efficiency. Our comprehensive solution provides everything you
                   need to manage your security company effectively.
@@ -84,6 +84,10 @@ export default function Home() {
         <div>
           <HRModuleSection />
         </div>
+         {/* Staff Section */}
+         <div ref={contactUsRef}>
+          <StaffPortalSection />
+        </div>
 
         {/* Features Section */}
         <div ref={featuresRef}>
@@ -95,10 +99,7 @@ export default function Home() {
           <AboutUsSection />
         </div>
 
-        {/* Contact Us Section */}
-        <div ref={contactUsRef}>
-          <ContactSection />
-        </div>
+       
       </main>
 
       <Footer
@@ -109,6 +110,7 @@ export default function Home() {
           features: () => scrollToSection(featuresRef),
           aboutUs: () => scrollToSection(aboutUsRef),
           contactUs: () => scrollToSection(contactUsRef),
+          staffPortal: () => scrollToSection(contactUsRef),
         }}
       />
     </div>

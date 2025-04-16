@@ -1,49 +1,37 @@
 "use client"
 
+import type { FC } from "react"
+
 interface FooterProps {
   onNavigate: {
     home: () => void
     benefits: () => void
     mobileApp: () => void
+    staffPortal: () => void
     features: () => void
     aboutUs: () => void
     contactUs: () => void
   }
 }
 
-const Footer = ({ onNavigate }: FooterProps) => {
+const Footer: FC<FooterProps> = ({ onNavigate }) => {
   return (
-    <footer className="bg-purple-800 text-white py-8">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
-            <div className="flex flex-wrap gap-6 justify-center md:justify-start">
-              <button onClick={onNavigate.home} className="text-sm hover:text-rose-200 transition-colors">
-                HOME
-              </button>
-              <button onClick={onNavigate.benefits} className="text-sm hover:text-rose-200 transition-colors">
-                BENEFITS
-              </button>
-              <button onClick={onNavigate.mobileApp} className="text-sm hover:text-rose-200 transition-colors">
-                MOBILE APP
-              </button>
-              <button onClick={onNavigate.features} className="text-sm hover:text-rose-200 transition-colors">
-                FEATURES
-              </button>
-              <button onClick={onNavigate.aboutUs} className="text-sm hover:text-rose-200 transition-colors">
-                ABOUT US
-              </button>
-              <button onClick={onNavigate.contactUs} className="text-sm hover:text-rose-200 transition-colors">
-                CONTACT US
-              </button>
-            </div>
-          </div>
-          <div className="text-center md:text-right">
-            <p className="mb-1 text-sm">Contact Us: info@fiksu-solutions.com</p>
-            <p className="text-sm opacity-80">© 2015 Copy Right Fiksu Solutions Limited</p>
-          </div>
-        </div>
+    <footer className="bg-[#5a50a3] text-white py-6 text-center text-xs">
+      {/* Top Navigation Links */}
+      <div className="mb-3 flex flex-wrap justify-center gap-4 text-[11px] tracking-wide font-medium">
+        <button onClick={onNavigate.home} className="hover:underline">WELCOME</button>
+        <button onClick={onNavigate.benefits} className="hover:underline">BENEFITS</button>
+        <button onClick={onNavigate.mobileApp} className="hover:underline">MOBILE APP</button>
+        <button onClick={onNavigate.features} className="hover:underline">FEATURES</button>
+        <button onClick={onNavigate.aboutUs} className="hover:underline">ABOUT US</button>
+        <button onClick={onNavigate.contactUs} className="hover:underline">CONTACT US</button>
       </div>
+
+      {/* Contact Email */}
+      <p className="text-[11px] mb-1">Contact Us: info@fiksu-solutions.com</p>
+
+      {/* Copyright */}
+      <p className="text-[11px]">© 2015  Copy Right  Fiksu Solutions Limited</p>
     </footer>
   )
 }
